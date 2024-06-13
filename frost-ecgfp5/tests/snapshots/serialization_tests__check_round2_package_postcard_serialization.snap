@@ -1,0 +1,5 @@
+---
+source: frost-ecgfp5/tests/serialization_tests.rs
+expression: "hex::encode(&bytes)"
+---
+0005acfd1df6ff833132f3afa289350c9d68c9824d1302e8ef4c5555d55c555555505555d5575555d5a9aaaa2a
