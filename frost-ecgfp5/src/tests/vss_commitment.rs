@@ -20,7 +20,9 @@ fn check_serialize_vss_commitment() {
 #[test]
 fn check_deserialize_vss_commitment() {
     let rng = thread_rng();
-    frost_core::tests::vss_commitment::check_deserialize_vss_commitment::<EcGFp5Poseidon256, _>(rng);
+    frost_core::tests::vss_commitment::check_deserialize_vss_commitment::<EcGFp5Poseidon256, _>(
+        rng,
+    );
 }
 
 #[test]
@@ -35,5 +37,7 @@ fn check_deserialize_vss_commitment_error() {
 #[test]
 fn check_compute_public_key_package() {
     let rng = thread_rng();
-    frost_core::tests::vss_commitment::check_compute_public_key_package::<EcGFp5Poseidon256, _>(rng);
+    frost_core::tests::vss_commitment::check_compute_public_key_package::<EcGFp5Poseidon256, _>(
+        rng,
+    );
 }

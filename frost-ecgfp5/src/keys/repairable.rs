@@ -10,7 +10,7 @@ use std::collections::BTreeMap;
 // (if it were below, the position of the import would vary between ciphersuites
 //  after `cargo fmt`)
 use crate::{frost, Ciphersuite, CryptoRng, Identifier, RngCore, Scalar};
-use crate::{Error, EcGFp5Poseidon256};
+use crate::{EcGFp5Poseidon256, Error};
 
 use super::{SecretShare, VerifiableSecretSharingCommitment};
 
@@ -79,7 +79,9 @@ mod tests {
     #[test]
     #[ignore = "repair-share.json is not updated"]
     fn check_repair_share_step_2() {
-        frost_core::tests::repairable::check_repair_share_step_2::<EcGFp5Poseidon256>(&REPAIR_SHARE);
+        frost_core::tests::repairable::check_repair_share_step_2::<EcGFp5Poseidon256>(
+            &REPAIR_SHARE,
+        );
     }
 
     #[test]

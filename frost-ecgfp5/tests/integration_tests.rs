@@ -229,9 +229,10 @@ fn check_sign_with_dealer_and_identifiers() {
 #[test]
 fn check_sign_with_missing_identifier() {
     let rng = thread_rng();
-    frost_core::tests::ciphersuite_generic::check_sign_with_missing_identifier::<EcGFp5Poseidon256, _>(
-        rng,
-    );
+    frost_core::tests::ciphersuite_generic::check_sign_with_missing_identifier::<
+        EcGFp5Poseidon256,
+        _,
+    >(rng);
 }
 
 #[test]
