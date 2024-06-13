@@ -9,12 +9,17 @@ use std::collections::BTreeMap;
 
 use frost_core::{self as frost};
 use frost_rerandomized::RandomizedCiphersuite;
-use plonky2_ecgfp5::curve::{curve::Point, scalar_field::Scalar};
+use plonky2::{
+    hash::poseidon::PoseidonHash,
+    plonk::config::{GenericHashOut, Hasher},
+};
+use plonky2_ecgfp5::{
+    curve::{curve::Point, scalar_field::Scalar},
+    gadgets::poseidon::{hash_to_scalar, u8_to_goldilocks},
+};
 use plonky2_field::types::{Field as Plonky2Field, Sample};
-use poseidon::poseidon_hash;
 use rand_core::{CryptoRng, RngCore};
 
-mod poseidon;
 #[cfg(test)]
 mod tests;
 
@@ -108,15 +113,11 @@ impl Group for EcGFp5Group {
 }
 
 fn hash_to_array(inputs: &[&[u8]]) -> [u8; 32] {
-    poseidon_hash(inputs.concat().as_ref())
-}
-
-/// mapping &u8 -> Scalar
-///
-/// TODO: Output Scalar should be close to uniform distribution.
-fn hash_to_scalar(domain: &[u8], msg: &[u8]) -> Scalar {
-    let output = poseidon_hash(&[domain, msg].concat());
-    Scalar::from_noncanonical_bytes(output.as_ref())
+    let f_inputs = u8_to_goldilocks(inputs.concat().as_ref());
+    PoseidonHash::hash_pad(&f_inputs)
+        .to_bytes()
+        .try_into()
+        .unwrap()
 }
 
 /// Context string from the ciphersuite in the [spec].
